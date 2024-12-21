@@ -1,0 +1,127 @@
+package com.krakedev.ca_pronostico.bdd;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+
+import com.krakedev.ca_pronostico.entidades.Equipos;
+import com.krakedev.ca_pronostico.entidades.Partidos;
+import com.krakedev.ca_pronostico.entidades.Pronosticos;
+import com.krakedev.ca_pronostico.entidades.Usuarios;
+import com.krakedev.ca_pronostico.excepciones.KrakeDevException;
+import com.krakedev.ca_pronostico.utils.ConexionBDD;
+
+public class PronosticosDBB {
+	public void insertar(Pronosticos pronostico) throws KrakeDevException{
+		Connection con = null; 
+		PreparedStatement ps = null;
+	
+		try {
+			con = ConexionBDD.obtenerConexion();
+			ps = con.prepareStatement("insert into pronosticos (usu_cedula, par_codigo, pro_marcador1, pro_marcador2) values (?,?,?,?)");
+			ps.setString(1, pronostico.getUsuario().getUsu_cedula());
+			ps.setInt(2, pronostico.getPartido().getPar_codigo());
+			ps.setInt(3, pronostico.getPro_marcador1());
+			ps.setInt(4, pronostico.getPro_marcador2());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new KrakeDevException("Error al insertar pronostico, detalle: "+e.getMessage());
+		} catch (KrakeDevException e) {
+			throw e;
+		} finally{
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Pronosticos> buscarPorUsuario(String usu_cedulaB) throws KrakeDevException {
+		ArrayList<Pronosticos> pronosticos = new ArrayList<Pronosticos>();
+		
+		Connection con = null;
+		Pronosticos pronostico = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Usuarios usuario = null;
+		Partidos partido = null;
+		Equipos equipo1 = null;
+		Equipos equipo2 = null;
+		
+		try {
+			con = ConexionBDD.obtenerConexion();
+			ps = con.prepareStatement("select pro.pro_codigo, usu.usu_cedula, usu.usu_nombres, usu.usu_apellidos, par.par_codigo, par.equ_codigo1, equ1.equ_iso as equ_iso1, equ1.equ_nombre as equ_nombre1, pro.pro_marcador1, par.equ_codigo2, equ2.equ_iso as equ_iso2, equ2.equ_nombre as equ_nombre2, pro.pro_marcador2, par.par_fecha, par.par_hora\r\n"
+					+ "from pronosticos pro\r\n"
+					+ "inner join usuarios usu on usu.usu_cedula = pro.usu_cedula\r\n"
+					+ "inner join partidos par on par.par_codigo = pro.par_codigo\r\n"
+					+ "inner join equipos equ1 on equ1.equ_codigo = par.equ_codigo1\r\n"
+					+ "inner join equipos equ2 on equ2.equ_codigo = par.equ_codigo2\r\n"
+					+ "where pro.usu_cedula = ? order by pro.pro_codigo asc");
+			ps.setString(1, usu_cedulaB);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				
+				int pro_codigo = rs.getInt("pro_codigo");
+				
+				String usu_cedula = rs.getString("usu_cedula");
+				String usu_nombres = rs.getString("usu_nombres");
+				String usu_apellidos = rs.getString("usu_apellidos");
+				
+				usuario = new Usuarios();
+				usuario.setUsu_cedula(usu_cedula);
+				usuario.setUsu_nombres(usu_nombres);
+				usuario.setUsu_apellidos(usu_apellidos);
+				
+				int par_codigo = rs.getInt("par_codigo");
+				partido = new Partidos();
+				
+				int equ_codigo1 = rs.getInt("equ_codigo1");
+				String equ_iso1 = rs.getString("equ_iso1");
+				String equ_nombre1 = rs.getString("equ_nombre1");
+				
+				int equ_codigo2 = rs.getInt("equ_codigo2");
+				String equ_iso2 = rs.getString("equ_iso2");
+				String equ_nombre2 = rs.getString("equ_nombre2");
+				
+				equipo1 = new Equipos();
+				equipo1.setEqu_codigo(equ_codigo1);
+				equipo1.setEqu_iso(equ_iso1);
+				equipo1.setEqu_nombre(equ_nombre1);
+				
+				equipo2 = new Equipos();
+				equipo2.setEqu_codigo(equ_codigo2);
+				equipo2.setEqu_iso(equ_iso2);
+				equipo2.setEqu_nombre(equ_nombre2);
+				
+				Date par_fecha = rs.getDate("par_fecha");
+				Time par_hora = rs.getTime("par_hora");
+				
+				partido = new Partidos(par_codigo, equipo1, equipo2, par_fecha, par_hora);
+				
+				int pro_marcador1 = rs.getInt("pro_marcador1");
+				int pro_marcador2 = rs.getInt("pro_marcador2");
+				
+				pronostico = new Pronosticos(pro_codigo, usuario, partido, pro_marcador1, pro_marcador2);
+			
+				pronosticos.add(pronostico);
+			}
+
+		} catch (KrakeDevException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new KrakeDevException("Error al consultar pronosticos, detalle: " + e.getMessage());
+		}
+		return pronosticos;
+		
+	}
+}

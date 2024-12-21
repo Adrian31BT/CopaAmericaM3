@@ -1,0 +1,31 @@
+package com.krakedev.ca_pronostico.servicios;
+
+import java.util.ArrayList;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.krakedev.ca_pronostico.bdd.PartidosBDD;
+import com.krakedev.ca_pronostico.entidades.Partidos;
+import com.krakedev.ca_pronostico.excepciones.KrakeDevException;
+
+@Path("partidos")
+public class ServiciosPartidos {
+	@Path("obtenerPartidos")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response recuperarPartidos(){
+		PartidosBDD partidosBDD = new PartidosBDD();
+		ArrayList<Partidos> partidos = null;
+		try {
+			partidos = partidosBDD.recuperarPartidos();
+			return Response.ok(partidos).build();
+		} catch (KrakeDevException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}	
+	}
+}

@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3133526879.index
+2875149318.index
+866720022.index
+1279543546.index
+3330715577.index
+442260130.index

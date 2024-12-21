@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.m2e.Maven2LaunchConfigurationType">
+    <booleanAttribute key="M2_BATCH" value="false"/>
+    <stringAttribute key="M2_GOALS" value="-U archetype:generate"/>
+    <listAttribute key="M2_PROPERTIES">
+        <listEntry value="module=App"/>
+        <listEntry value="archetypeGroupId=net.ltgt.gwt.archetypes"/>
+        <listEntry value="archetypeArtifactId=modular-webapp"/>
+        <listEntry value="archetypeVersion=2024.11.13"/>
+        <listEntry value="groupId=com.krakadev"/>
+        <listEntry value="artifactId=ca_pronosticos"/>
+        <listEntry value="version=1.0.0"/>
+        <listEntry value="package=com.krakadev.ca_pronosticos"/>
+        <listEntry value="outputDirectory=C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\ca_pronosticos"/>
+    </listAttribute>
+    <booleanAttribute key="M2_SAVE_BEFORE_LAUNCH" value="false"/>
+    <booleanAttribute key="org.eclipse.debug.ui.private" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.WORKING_DIRECTORY" value="C:\Users\USERA1~1\AppData\Local\Temp\m2e-archetypeGenerator11487427443834468388"/>
+</launchConfiguration>

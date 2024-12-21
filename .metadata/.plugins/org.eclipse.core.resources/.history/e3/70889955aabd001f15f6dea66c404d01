@@ -1,0 +1,94 @@
+package com.krakedev.ca_pronostico.bdd;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.krakedev.ca_pronostico.entidades.Partidos;
+import com.krakedev.ca_pronostico.entidades.Pronosticos;
+import com.krakedev.ca_pronostico.entidades.Usuarios;
+import com.krakedev.ca_pronostico.excepciones.KrakeDevException;
+import com.krakedev.ca_pronostico.utils.ConexionBDD;
+
+public class PronosticosDBB {
+	public void insertar(Pronosticos pronostico) throws KrakeDevException{
+		Connection con = null; 
+		PreparedStatement ps = null;
+	
+		try {
+			con = ConexionBDD.obtenerConexion();
+			ps = con.prepareStatement("insert into pronosticos (usu_cedula, par_codigo, pro_marcador1, pro_marcador2) values (?,?,?,?)");
+			ps.setString(1, pronostico.getUsuario().getUsu_cedula());
+			ps.setInt(2, pronostico.getPartido().getPar_codigo());
+			ps.setInt(3, pronostico.getPro_marcador1());
+			ps.setInt(4, pronostico.getPro_marcador2());
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new KrakeDevException("Error al insertar pronostico, detalle: "+e.getMessage());
+		} catch (KrakeDevException e) {
+			throw e;
+		} finally{
+			if(con != null){
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	public ArrayList<Pronosticos> buscarPorUsuario(String usu_cedulaB) throws KrakeDevException {
+		ArrayList<Pronosticos> pronosticos = new ArrayList<Pronosticos>();
+		
+		Connection con = null;
+		Pronosticos pronostico = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Usuarios usuario = null;
+		Partidos partido = null;
+		try {
+			con = ConexionBDD.obtenerConexion();
+			ps = con.prepareStatement("select pro.pro_codigo, pro.usu_cedula, pro.par_codigo, par.equ_codigo1,  equ1.equ_nombre as pais_local, pro.pro_marcador1, par.equ_codigo2,  equ2.equ_nombre as pais_visitante, pro.pro_marcador2 \r\n"
+					+ "from pronosticos pro\r\n"
+					+ "inner join partidos par on par.par_codigo = pro.par_codigo\r\n"
+					+ "inner join equipos equ1 on par.equ_codigo1 = equ1.equ_codigo\r\n"
+					+ "inner join equipos equ2 on par.equ_codigo2 = equ2.equ_codigo\r\n"
+					+ "where pro.usu_cedula = ? order by pro.pro_codigo asc");
+			ps.setString(1, usu_cedulaB);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				
+				int pro_codigo = rs.getInt("pro_codigo");
+				
+				int par_codigo = rs.getInt("par_codigo");
+				partido = new Partidos();
+				partido.setPar_codigo(par_codigo);
+				
+				String usu_cedula = rs.getString("usu_cedula");
+				
+				usuario = new Usuarios();
+				usuario.setUsu_cedula(usu_cedula);
+				
+				int pro_marcador1 = rs.getInt("pro_marcador1");
+				int pro_marcador2 = rs.getInt("pro_marcador2");
+				
+				pronostico = new Pronosticos(pro_codigo, usuario, partido, pro_marcador1, pro_marcador2);
+			
+				pronosticos.add(pronostico);
+			}
+
+		} catch (KrakeDevException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new KrakeDevException("Error al consultar pronosticos, detalle: " + e.getMessage());
+		}
+		return pronosticos;
+		
+	}
+}

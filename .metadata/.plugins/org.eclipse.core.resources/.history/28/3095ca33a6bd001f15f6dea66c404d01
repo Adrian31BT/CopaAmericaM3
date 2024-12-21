@@ -1,0 +1,72 @@
+package com.krakedev.ca_pronostico.entidades;
+
+import java.sql.Timestamp;
+import java.util.Date;
+
+public class Partidos {
+	private int par_codigo;
+	private Equipos equipo1;
+	private Equipos equipo2;
+	private Date par_fecha;
+	private Timestamp par_hora;
+	
+	public Partidos() {
+		super();
+	}
+
+	public Partidos(int par_codigo, Equipos equipo1, Equipos equipo2, Date par_fecha, Timestamp par_hora) {
+		super();
+		this.par_codigo = par_codigo;
+		this.equipo1 = equipo1;
+		this.equipo2 = equipo2;
+		this.par_fecha = par_fecha;
+		this.par_hora = par_hora;
+	}
+
+	public int getPar_codigo() {
+		return par_codigo;
+	}
+
+	public void setPar_codigo(int par_codigo) {
+		this.par_codigo = par_codigo;
+	}
+
+	public Equipos getEquipo1() {
+		return equipo1;
+	}
+
+	public void setEquipo1(Equipos equipo1) {
+		this.equipo1 = equipo1;
+	}
+
+	public Equipos getEquipo2() {
+		return equipo2;
+	}
+
+	public void setEquipo2(Equipos equipo2) {
+		this.equipo2 = equipo2;
+	}
+
+	public Date getPar_fecha() {
+		return par_fecha;
+	}
+
+	public void setPar_fecha(Date par_fecha) {
+		this.par_fecha = par_fecha;
+	}
+
+	public Timestamp getPar_hora() {
+		return par_hora;
+	}
+
+	public void setPar_hora(Timestamp par_hora) {
+		this.par_hora = par_hora;
+	}
+
+	@Override
+	public String toString() {
+		return "Partidos [par_codigo=" + par_codigo + ", equipo1=" + equipo1 + ", equipo2=" + equipo2 + ", par_fecha="
+				+ par_fecha + ", par_hora=" + par_hora + "]";
+	}
+
+}

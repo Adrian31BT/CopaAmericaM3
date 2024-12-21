@@ -1,0 +1,7 @@
+package com.krakedev.copa_america.excepciones;
+
+public class KrakeDevException extends Exception{
+	public KrakeDevException(String mensaje) {
+		super(mensaje);
+	}
+}

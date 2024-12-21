@@ -1,0 +1,17 @@
+INDEX VERSION 1.134
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\269934062.index
+\copa_america\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1178359732.index
+\copa_america\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3588807439.index
+\pronostico_ca\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3441024706.index
+\ca_pronostico\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4010205869.index
+\ca_pronosticos\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\465501645.index
+\pronostico_ca\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1423465305.index
+\copamerica\src\main\java
+C:\Users\USER A1\Desktop\Programacion-Adrian\M3-KraveDev\EvaluacionM3\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1664251635.index
+\copamerica\src\main\java
